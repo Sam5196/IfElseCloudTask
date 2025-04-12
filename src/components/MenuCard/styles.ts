@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
       paddingVertical: 16,
       paddingHorizontal: 8,
       gap:10,
-      flex:1
+      width:'48%'
     },
     menuItem: {
       alignItems: 'center',
