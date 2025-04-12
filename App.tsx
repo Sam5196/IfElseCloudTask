@@ -1,131 +1,163 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { JSX, useState } from 'react';
 import {
-  ScrollView,
-  StatusBar,
+  SafeAreaView,
+  FlatList,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
+  ListRenderItem,
+  RefreshControl,
+  Image
 } from 'react-native';
+import { Provider } from 'react-redux';
+import { store } from './src/store/store';
+import { useDashboardData } from './src/hooks/useDashboardData';
+import BalanceCard from './src/components/BalanceCard/BalanceCard';
+import AutoFillCard from './src/components/AutoFillCard/AutoFillCard';
+import ChartCard from './src/components/ChartCard/ChartCard';
+import MenuCard from './src/components/MenuCard/MenuCard';
+import LoadingSpinner from './src/components/LoadingSpinner/LoadingSpinner';
+import { colors } from './src/styles/colors';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Dashboard: React.FC = () => {
+  const { data, loading, error, refetch } = useDashboardData();
+  const [refreshing, setRefreshing] = useState(false);
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
   };
 
-  /*
-   * To keep the template simple and small we're adding padding to prevent view
-   * from rendering under the System UI.
-   * For bigger apps the recommendation is to use `react-native-safe-area-context`:
-   * https://github.com/AppAndFlow/react-native-safe-area-context
-   *
-   * You can read more about it here:
-   * https://github.com/react-native-community/discussions-and-proposals/discussions/827
-   */
-  const safePadding = '5%';
+  const cards = data
+    ? [
+      { id: '1', component: <BalanceCard balance={data.balance} /> },
+      {
+        id: '2',
+        component: (
+          <AutoFillCard
+            auto_fill_date={data.auto_fill_date}
+            auto_fill_amount={data.auto_fill_amount.toString()}
+          />
+        ),
+      },
+      { id: '3', component: <ChartCard /> },
+      { id: '4', component: <MenuCard /> },
+    ]
+    : [];
+
+  const renderItem: ListRenderItem<{ id: string; component: JSX.Element }> = ({
+    item,
+  }) => <View>{item.component}</View>;
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
 
   return (
-    <View style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        style={backgroundStyle}>
-        <View style={{paddingRight: safePadding}}>
-          <Header/>
+    <SafeAreaView style={styles.safeArea}>
+      {/* {loading && <LoadingSpinner />} */}
+
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 12
+      }}>
+        <View style={{
+          justifyContent:'center'
+        }}>
+          <Text style={styles.profiletxt}>Hi, Clarence</Text>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <FontAwesome name="phone" size={20} color={colors.gray} />
+            <Text style={{ fontSize: 14, color: colors.gray }}>(801)923-290</Text>
+          </View>
         </View>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            paddingHorizontal: safePadding,
-            paddingBottom: safePadding,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+        <View style={{
+          borderWidth:3,
+          borderRadius:27,
+          borderColor:colors.primaryDark
+        }}>
+          <Image source={require('./src/assets/profile.jpg')} 
+          style={{width:50,height:50,borderRadius:27}}
+          resizeMode='cover'/>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+
+      <View style={{
+
+        flex: 1,
+        // width:'50%'
+      }}>
+        <View style={{
+          flexDirection: 'row'
+        }}>
+          <FontAwesome name="phone" size={20} color={colors.gray} />
+          <Text>Tips on increasing your go forward</Text>
+        </View>
+        <View>
+          <Text>Tips on increasing your go forward</Text>
+          <FontAwesome name="phone" size={20} color={colors.gray} />
+        </View>
+      </View>
+
+      {!loading && data && (
+        <FlatList
+          data={cards}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+            />
+          }
+        />
+      )}
+    </SafeAreaView>
   );
-}
+};
+
+const App: React.FC = () => {
+  return (
+    <Provider store={store}>
+      <Dashboard />
+    </Provider>
+  );
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.secondary,
+    marginHorizontal: 12
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  container: {
+    padding: 12,
+    gap: 8,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
-  highlight: {
-    fontWeight: '700',
+  errorText: {
+    color: colors.danger,
+    fontSize: 16,
   },
+  profiletxt: {
+    fontSize: 22,
+    color: colors.primaryDark,
+    fontWeight: 'bold'
+  }
 });
 
 export default App;

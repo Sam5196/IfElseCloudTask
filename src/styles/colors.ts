@@ -1,0 +1,16 @@
+// colors.ts
+export const colors = {
+    primary: '#566DFB',
+    primaryDark: '#2F3BAD',
+    secondary: '#F0F4FC',
+    white: '#FFFFFF',
+    black: '#000000',
+    gray: '#A0ADBC',
+    lightGray: '#E9ECEF',
+    success: '#34B549',
+    danger: '#E24E58',
+    warning: '#FFC107',
+    info: '#17A2B8',
+    gradientStart: '#4B6AF9',
+    gradientEnd: '#3A56D5',
+  };
