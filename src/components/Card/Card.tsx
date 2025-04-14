@@ -1,4 +1,3 @@
-// Card.tsx
 import React, { ReactNode } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
@@ -15,8 +14,8 @@ const Card: React.FC<CardProps> = ({ children, style, animated = true }) => {
 
   if (animated) {
     return (
-      <Animated.View 
-        entering={FadeIn.duration(500)} 
+      <Animated.View
+        entering={FadeIn.duration(500)}
         exiting={FadeOut.duration(300)}
         style={cardStyle}
       >

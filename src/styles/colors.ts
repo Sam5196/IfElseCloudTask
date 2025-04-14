@@ -1,4 +1,3 @@
-// colors.ts
 export const colors = {
     primary: '#566DFB',
     primaryDark: '#2F3BAD',

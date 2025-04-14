@@ -13,12 +13,14 @@ import { Provider } from 'react-redux';
 import { store } from './src/store/store';
 import { useDashboardData } from './src/hooks/useDashboardData';
 import BalanceCard from './src/components/BalanceCard/BalanceCard';
-import AutoFillCard from './src/components/AutoFillCard/AutoFillCard';
+import Filter from './src/components/Filter/Filter';
+import ActivitiesCard from './src/components/ActivitiesCard/ActivitiesCard';
+import OveralTaskCard from './src/components/OveralTaskCard/OveralTaskCard';
 import ChartCard from './src/components/ChartCard/ChartCard';
 import MenuCard from './src/components/MenuCard/MenuCard';
-import LoadingSpinner from './src/components/LoadingSpinner/LoadingSpinner';
 import { colors } from './src/styles/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import TitleCard from './src/components/TitleCard/TitleCard';
 
 const Dashboard: React.FC = () => {
   const { data, loading, error, refetch } = useDashboardData();
@@ -32,18 +34,16 @@ const Dashboard: React.FC = () => {
 
   const cards = data
     ? [
-      { id: '1', component: <BalanceCard balance={data.balance} /> },
+      { id: '1', component: <TitleCard /> },
       {
-        id: '2',
-        component: (
-          <AutoFillCard
-            auto_fill_date={data.auto_fill_date}
-            auto_fill_amount={data.auto_fill_amount.toString()}
-          />
-        ),
+        id: '2', component: <BalanceCard balance={data.balance} auto_fill_date={data.auto_fill_date}
+          auto_fill_amount={data.auto_fill_amount.toString()} />
       },
-      { id: '3', component: <ChartCard /> },
-      { id: '4', component: <MenuCard /> },
+      { id: '3', component: <ActivitiesCard /> },
+      { id: '4', component: <OveralTaskCard /> },
+      { id: '5', component: <Filter /> },
+      { id: '6', component: <MenuCard /> },
+      { id: '7', component: <ChartCard /> },
     ]
     : [];
 
@@ -61,47 +61,28 @@ const Dashboard: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* {loading && <LoadingSpinner />} */}
-
       <View style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 12
       }}>
         <View style={{
-          justifyContent:'center'
+          justifyContent: 'center'
         }}>
-          <Text style={styles.profiletxt}>Hi, Clarence</Text>
+          <Text style={[styles.profiletxt, { letterSpacing: 1 }]}>Hi, Clarence</Text>
           <View style={{ flexDirection: 'row', gap: 8 }}>
             <FontAwesome name="phone" size={20} color={colors.gray} />
             <Text style={{ fontSize: 14, color: colors.gray }}>(801)923-290</Text>
           </View>
         </View>
         <View style={{
-          borderWidth:3,
-          borderRadius:27,
-          borderColor:colors.primaryDark
+          borderWidth: 3,
+          borderRadius: 27,
+          borderColor: colors.primaryDark
         }}>
-          <Image source={require('./src/assets/profile.jpg')} 
-          style={{width:50,height:50,borderRadius:27}}
-          resizeMode='cover'/>
-        </View>
-      </View>
-
-      <View style={{
-
-        flex: 1,
-        // width:'50%'
-      }}>
-        <View style={{
-          flexDirection: 'row'
-        }}>
-          <FontAwesome name="phone" size={20} color={colors.gray} />
-          <Text>Tips on increasing your go forward</Text>
-        </View>
-        <View>
-          <Text>Tips on increasing your go forward</Text>
-          <FontAwesome name="phone" size={20} color={colors.gray} />
+          <Image source={require('./src/assets/profile.jpg')}
+            style={{ width: 50, height: 50, borderRadius: 27 }}
+            resizeMode='cover' />
         </View>
       </View>
 
@@ -135,14 +116,12 @@ const App: React.FC = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.secondary,
-    marginHorizontal: 12
+    backgroundColor: colors.secondary
   },
   container: {
     padding: 12,
     gap: 8,
   },
-
   errorContainer: {
     flex: 1,
     justifyContent: 'center',

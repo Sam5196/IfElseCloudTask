@@ -1,14 +1,16 @@
 import { StyleSheet } from "react-native";
-import { fonts } from "../../styles/fonts";
+import { fonts, Size } from "../../styles/fonts";
 import { colors } from "../../styles/colors";
 
 export const styles = StyleSheet.create({
     container: {
     backgroundColor:colors.white,
-      paddingVertical: 16,
+      paddingVertical: 12,
       paddingHorizontal: 8,
       gap:10,
-      width:'48%'
+      width:'48%',
+      elevation:3,
+      borderRadius:8
     },
     menuItem: {
       alignItems: 'center',
@@ -33,4 +35,9 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
       },
+      title:{
+        color:colors.primaryDark,
+        fontSize:Size.md,
+        fontWeight:'bold'
+      }
   });

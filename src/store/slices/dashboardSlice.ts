@@ -1,4 +1,3 @@
-// dashboardSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DashboardData } from '../../api/dashboardApi';
 

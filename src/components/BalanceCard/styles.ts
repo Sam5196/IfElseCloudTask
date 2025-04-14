@@ -1,14 +1,12 @@
-// BalanceCard/styles.ts
 import { StyleSheet } from 'react-native';
 import { colors } from '../../styles/colors';
-import { globalStyles } from '../../styles/globalStyles';
 
 export const styles = StyleSheet.create({
   container: {
     padding: 8,
     flexDirection:'row',
     justifyContent:'space-between',
-    
+    marginTop:8
   },
   balance: {
     fontSize: 22,
@@ -21,7 +19,6 @@ export const styles = StyleSheet.create({
     borderTopColor: colors.lightGray,
   },
   label: {
-    // fontFamily: fonts.regular,
     fontSize: 14,
     color: colors.gray,
   },
@@ -32,7 +29,6 @@ export const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   profitText: {
-    // fontFamily: fonts.semiBold,
     fontSize: 14,
     color: colors.primary,
   },

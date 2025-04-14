@@ -1,25 +1,28 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import Card from '../Card/Card';
 import { styles } from './styles';
 import { colors } from '../../styles/colors';
 import { fonts, Size } from '../../styles/fonts';
-import { globalStyles } from '../../styles/globalStyles';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Entypo from 'react-native-vector-icons/Entypo';
+import { format } from 'date-fns';
+import { parseISO } from 'date-fns';
+import Icon from '../../styles/Icon';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 interface BalanceCardProps {
     balance: number;
+    auto_fill_amount: string;
+    auto_fill_date: string;
 }
 
-const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => {
+const BalanceCard: React.FC<BalanceCardProps> = ({ balance, auto_fill_amount, auto_fill_date }) => {
     return (
-        <View style={{
-            backgroundColor:colors.white,
-            padding:8,
-            borderRadius:8,
-            elevation:3
-            }}>
+        <Animated.View style={{
+            backgroundColor: colors.white,
+            padding: 8,
+            borderRadius: 8,
+            elevation: 3
+        }} entering={FadeIn.duration(500)}
+            exiting={FadeOut.duration(300)}>
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', gap: 8 }}>
                     <View style={{
@@ -27,10 +30,11 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => {
                         borderRadius: 20,
                         justifyContent: 'center',
                         alignItems: 'center',
-                        paddingVertical: 5,
-                        paddingHorizontal: 10
+                        flex: 1,
+                        paddingHorizontal: 0,
+                        paddingVertical: 0
                     }}>
-                        <Entypo name="wallet" size={23} color={colors.primary} />
+                        <Icon type='Entypo' name="wallet" size={23} color={colors.primary} />
                     </View>
                     <View>
                         <Text style={styles.balance}>${balance.toLocaleString()}</Text>
@@ -45,7 +49,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    <AntDesign name="rightcircleo" size={23} color={colors.gray} />
+                    <Icon type='AntDesign' name="rightcircleo" size={23} color={colors.gray} />
                 </View>
 
             </View>
@@ -64,7 +68,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => {
                 <View style={{
                     justifyContent: 'center',
                     alignItems: 'flex-start',
-                    marginLeft: 20,
+                    marginLeft: 10,
                     flex: 1
                 }}>
                     <Text style={{
@@ -72,9 +76,9 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => {
                         fontWeight: 'bold',
                         fontFamily: fonts.regular,
                         fontSize: Size.lg
-                    }}>10th Jul, 2020</Text>
+                    }}>{format(parseISO(auto_fill_date), "do MMMM, yyyy")}</Text>
                     <Text style={{
-                        fontSize: Size.md,
+                        fontSize: Size.sm,
                         color: colors.gray
                     }}>Auto fill date</Text>
                 </View>
@@ -89,14 +93,14 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => {
                         fontWeight: 'bold',
                         fontFamily: fonts.regular,
                         fontSize: Size.lg
-                    }}>$20.00</Text>
+                    }}>${auto_fill_amount}</Text>
                     <Text style={{
-                        fontSize: Size.md,
+                        fontSize: Size.sm,
                         color: colors.gray
                     }}>Auto fill amount</Text>
                 </View>
             </View>
-        </View>
+        </Animated.View>
     );
 };
 

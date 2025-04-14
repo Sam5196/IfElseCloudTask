@@ -1,7 +1,6 @@
-// styles.ts
 import { StyleSheet } from 'react-native';
 import { colors } from '../../styles/colors';
-import { globalStyles } from '../../styles/globalStyles';
+import { fonts, Size } from '../../styles/fonts';
 
 export const styles = StyleSheet.create({
   container: {
@@ -20,13 +19,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   xAxisLabel: {
-    // fontFamily: fonts.regular,
+    fontFamily: fonts.regular,
     fontSize: 10,
     color: colors.gray,
     width: 24,
     textAlign: 'center',
   },
-  // Additional styles for chart elements
   chartLine: {
     height: 2,
     backgroundColor: colors.lightGray,
@@ -37,4 +35,9 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(75, 106, 249, 0.1)',
     borderRadius: 4,
   },
+  title:{
+    color:colors.primaryDark,
+    fontSize:Size.md,
+    fontWeight:'bold'
+  }
 });

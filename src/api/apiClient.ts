@@ -1,4 +1,3 @@
-// apiClient.ts
 import axios, { AxiosInstance } from 'axios';
 
 const apiClient: AxiosInstance = axios.create({
@@ -12,12 +11,10 @@ const apiClient: AxiosInstance = axios.create({
 
 apiClient.interceptors.response.use(
   (response) => {
-    console.log('API Response Data:', response.data);
+    console.log('Response', response.data);
     return response.data;
   },
   (error) => {
-    // Handle errors globally
-    console.error('API Error:', error);
     return Promise.reject(error);
   }
 );

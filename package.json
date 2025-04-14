@@ -1,5 +1,5 @@
 {
-  "name": "GTTIANS",
+  "name": "IFELSECLOUDTASK",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,12 +10,16 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-navigation/native": "^7.1.6",
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
+    "date-fns": "^4.1.0",
     "react": "19.0.0",
     "react-native": "0.79.0",
     "react-native-charts-wrapper": "^0.6.0",
+    "react-native-progress": "^5.0.1",
     "react-native-reanimated": "^3.17.3",
+    "react-native-svg": "^15.11.2",
     "react-native-svg-charts": "^5.4.0",
     "react-native-vector-icons": "^10.2.0",
     "react-redux": "^9.2.0"

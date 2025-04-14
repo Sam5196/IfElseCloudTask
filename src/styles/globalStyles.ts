@@ -21,8 +21,8 @@ export const globalStyles = StyleSheet.create({
   },
   title: {
     fontFamily: fonts.medium,
-    fontSize: 16,
-    color: colors.primaryDark,
+    fontSize: 14,
+    color: colors.primary,
     fontWeight:'bold'
   },
   value: {
