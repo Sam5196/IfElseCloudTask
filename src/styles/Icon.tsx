@@ -96,7 +96,6 @@ import { colors } from './colors';
     disable,
     loading,
   }: ICON_PROPS) => {
-    // const colors = useTheme();
     if (onPress) {
       return (
         <TouchableOpacity

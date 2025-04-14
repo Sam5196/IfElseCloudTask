@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, processColor  } from 'react-native';
 import { LineChart } from 'react-native-charts-wrapper';
-import Card from '../Card/Card';
 import { styles } from './styles';
 import { colors } from '../../styles/colors';
 import Icon from '../../styles/Icon';
@@ -65,7 +64,7 @@ const ChartCard: React.FC = () => {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   return (
-    <Card>
+
       <View style={styles.container}>
         <View style={{ gap: 6, flexDirection: 'row', justifyContent: 'space-between' }}>
           <View style={{ gap: 6 }}>
@@ -130,7 +129,7 @@ const ChartCard: React.FC = () => {
           />
         </View>
       </View>
-    </Card>
+
   );
 };
 
